@@ -1,6 +1,11 @@
 ## Tenant provisionning 
-Ask your admin here https://discord.com/channels/948214033746624584/965961854977474591 to provision your tenant
-The informations needed are : 
+
+Ask your admin hereto provision your tenant [discord](https://discord.com/channels/948214033746624584/965961854977474591 ) 
+
+<br/>
+
+The needed informations are : 
+
 * Team name 
 * Emails of members (Gmail based emails) 
 
@@ -26,4 +31,10 @@ The secret here is named gitops-myapp-auth, but it should be changed to your pro
 ssh-keygen -t ecdsa -b 521
 
 flux create secret git gitops-myapp-auth --url=ssh://git@github.com/octocampus/sample-gitops-project.git --private-key-file=flux -n mfa
+```
+
+## Run Flux synchronization
+
+```
+kustomize build . | kubectl apply -f -
 ```

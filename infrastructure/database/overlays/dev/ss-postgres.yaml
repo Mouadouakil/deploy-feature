@@ -2,7 +2,7 @@ apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
   creationTimestamp: null
-  name: mfa-postgresql
+  name: db-postgresql
   namespace: mfa
 spec:
   encryptedData:
@@ -16,7 +16,7 @@ spec:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: postgresql
         helm.sh/chart: postgresql-11.1.19
-      name: mfa-postgresql
+      name: db-postgresql
       namespace: mfa
     type: Opaque
 

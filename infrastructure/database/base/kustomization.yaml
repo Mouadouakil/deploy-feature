@@ -6,6 +6,6 @@ resources:
   - svc-headless.yaml
 
 commonLabels:
-  app.kubernetes.io/name: mfa-db
+  app.kubernetes.io/name: db
   app.kubernetes.io/component: postgres
-  app.kubernetes.io/part-of: mfa
+  app.kubernetes.io/part-of: db

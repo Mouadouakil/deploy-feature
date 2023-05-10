@@ -50,9 +50,3 @@ kustomize build .
 
 kustomize build . | kubectl apply -
 ```
-
-# Sealing secrets
-
-```
-cat secrets.yaml | kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets --format yaml > ss-postgres.yaml
-```

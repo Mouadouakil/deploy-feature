@@ -3,34 +3,33 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mfa-postgresql
-  namespace: "mfa"
+  name: db-postgresql
   labels:
     app.kubernetes.io/name: postgresql
     helm.sh/chart: postgresql-11.1.19
-    app.kubernetes.io/instance: mfa
+    app.kubernetes.io/instance: app-db
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: primary
     role: primary
   annotations:
 spec:
   replicas: 1
-  serviceName: mfa-postgresql-hl
+  serviceName: db-postgresql-hl
   updateStrategy:
     rollingUpdate: {}
     type: RollingUpdate
   selector:
     matchLabels:
       app.kubernetes.io/name: postgresql
-      app.kubernetes.io/instance: mfa
+      app.kubernetes.io/instance: app-db
       app.kubernetes.io/component: primary
   template:
     metadata:
-      name: mfa-postgresql
+      name: db-postgresql
       labels:
         app.kubernetes.io/name: postgresql
         helm.sh/chart: postgresql-11.1.19
-        app.kubernetes.io/instance: mfa
+        app.kubernetes.io/instance: app-db
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/component: primary
       annotations:
@@ -46,10 +45,10 @@ spec:
                 labelSelector:
                   matchLabels:
                     app.kubernetes.io/name: postgresql
-                    app.kubernetes.io/instance: mfa
+                    app.kubernetes.io/instance: app-db
                     app.kubernetes.io/component: primary
                 namespaces:
-                  - "mfa"
+                  - "app-db"
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
@@ -79,10 +78,10 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mfa-postgresql
+                  name: db-postgresql
                   key: postgres-password
             - name: POSTGRES_DB
-              value: "mfadb"
+              value: "app-db"
             - name: POSTGRESQL_ENABLE_LDAP
               value: "no"
             - name: POSTGRESQL_ENABLE_TLS
@@ -112,7 +111,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - exec pg_isready -U "mfa" -d "mfadb" -h 127.0.0.1 -p 5432
+                - exec pg_isready -U "app-db" -d "app-dbdb" -h 127.0.0.1 -p 5432
           readinessProbe:
             failureThreshold: 6
             initialDelaySeconds: 5
@@ -126,7 +125,7 @@ spec:
                 - -e
 
                 - |
-                  exec pg_isready -U "mfa" -d "mfadb" -h 127.0.0.1 -p 5432
+                  exec pg_isready -U "app-db" -d "app-dbdb" -h 127.0.0.1 -p 5432
                   [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
           resources:
             limits: {}
