@@ -1,0 +1,47 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: my-team
+spec:
+  interval: 1m
+  url: ssh://git@github.com/octocampus/sample-gitops-project.git
+  ref:
+    branch: main
+  secretRef:
+    name: gitops-myapp-auth
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: sb-api
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: mfa-team
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: sb-api
+      namespace: my-namespace
+  path: ./workloads/backend/sb-api/overlays/dev
+  prune: true
+  validation: client
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: react-app
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: my-team
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: react-app
+      namespace: my-namespace
+  path: ./workloads/fronts/react-app/overlays/dev
+  prune: true
+  validation: client

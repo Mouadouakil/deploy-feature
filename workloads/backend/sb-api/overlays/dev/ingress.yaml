@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sb-api-ingress
+  namespace: mfa
+  labels:
+    app.kubernetes.io/component: sb-api
+    app.kubernetes.io/instance: sb-api
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/issuer: letsencrypt-campus
+spec:
+  tls:
+    - hosts:
+        - sb-api.campus.clusterdiali.me
+      secretName: sb-api.campus.clusterdiali.me-tls
+  rules:
+    - host: sb-api.campus.clusterdiali.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sb-api
+                port:
+                  number: 8080

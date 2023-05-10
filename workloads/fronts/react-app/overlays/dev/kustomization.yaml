@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: my-namespace
+resources:
+  - ../../base
+  - ingress.yaml
+
+images:
+  - name: rg.fr-par.scw.cloud/campus/reatc
+    newTag: 0.1.0-99
+
+configMapGenerator:
+  - name: nginx-react-app-config
+    files:
+      - config/default.conf
+  - name: jsconfig-react-app
+    files:
+      - config/current.js
+
+

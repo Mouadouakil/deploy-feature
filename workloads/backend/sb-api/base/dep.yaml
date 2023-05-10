@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sb-api
+spec:
+  selector:
+    matchLabels:
+      app: sb-api
+  template:
+    metadata:
+      name: sb-api
+      labels:
+        app: sb-api
+    spec:
+      serviceAccountName: sb-api
+      containers:
+        - name: sb-api
+          image: rg.fr-par.scw.cloud/campus/sb-api:1.0.0-SNAPSHOT
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "50m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1000m"
+          volumeMounts:
+            - name: sb-api-config-volume
+              mountPath: /config
+          securityContext:
+            allowPrivilegeEscalation: false
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+            periodSeconds: 3
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+            periodSeconds: 10
+            failureThreshold: 10
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 10
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: default
+            - name: _JAVA_OPTIONS
+              value: -Djavax.net.ssl.trustStore=/ssca/truststore/cacerts
+            - name: SPRING_CONFIG_LOCATION
+              value: "file:///config/application.yml"
+      imagePullSecrets:
+        - name: campus-registry-secret
+      volumes:
+        - name: sb-api-config-volume
+          configMap:
+            name: sb-api-config

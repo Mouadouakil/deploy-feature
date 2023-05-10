@@ -1,0 +1,22 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: mfa-postgresql
+  namespace: mfa
+spec:
+  encryptedData:
+    postgres-password: AgAGgRYMlCYHBTauqd+un90V+Z3QZo/omc9xvBBk82mlJ1OenbDojCvrENROMmAD6nWhpNtGjBvLMyva5teuD9i1arT0cA8ODA0nx6sk5ezySex4PHE8Oo5l8NtOeWEgq8e+n1w0gD2m4XaGWnbqd9a15p+kBs3RGajwGQvSwzOOFN114AjhdO2sIi4U3tRDXHcm5qIIb3u4ua4fFp8YDsNGXDhTk7H+v374hlbN4lZ1hzyLT626h2pyS72rKaaH/If52yz10Tmc79xYSGkdVvqQi8b3ol++/yPCpqVXXsZFJMc93KAzPS/s4s7YkuZEuyuvgqRzkuLqavhA1KLolsoKMFMHccXweYLNlUO3ygM8IR1porJeG/5jHZrsFQAJssgQD+uATB5lw5sKrTa22tlm5KZKGzrtoI0/SUa9l3jUg3yMRmg92sex9k36OSy9V0zUAljnMuvR1QhQD7IaFPtZLnJ7VmRgWbmeSBXUPFW/lkTYE2qzCX7QUKi7S2AAIpJ17oAjEAqK1xQAKXMANQH9NGJ2gju/VoMy0K9o9p/3DcU0GeBBqHFtatEpDtIyuz0Wp4vrjhxk0Vlv8WCreD10i9mxc1aOAbOogC2Nd2IfZMBgGB7M/oE2oPIzfsJCSCiHpJS2t6IrjPRmprdHnNvyNdjpcQgEbIea2boxzzgeKwzwjKyKaCVyPucVJXPXjkWWYGCey1zT2wa8
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/instance: mfa
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: postgresql
+        helm.sh/chart: postgresql-11.1.19
+      name: mfa-postgresql
+      namespace: mfa
+    type: Opaque
+

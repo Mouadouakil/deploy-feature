@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-app
+spec:
+  selector:
+    matchLabels:
+      app: react-app
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+      labels:
+        app: react-app
+        maistra.io/expose-route: "true"
+        name: react-app
+        version: 1.0.0
+        component: web
+        part-of: campus
+        managed-by: helm
+    spec:
+      containers:
+        - name: react-app
+          image: rg.fr-par.scw.cloud/campus/oba-admin:c1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+          - name: nginx-react-app-config
+            mountPath: /etc/nginx/conf.d
+          - name: jsconfig-react-app
+            mountPath: /home/appuser/app/resources/links
+          resources:
+            limits:
+              cpu: "400m"
+              memory: "1Gi"
+            requests:
+              cpu: "30m"
+              memory:  "768Mi"
+          readinessProbe:    
+            initialDelaySeconds: 15
+            timeoutSeconds: 1  
+            httpGet:
+              path: /
+              port: 8080
+          livenessProbe:
+              initialDelaySeconds: 15
+              timeoutSeconds: 1
+              httpGet:
+                path: /
+                port: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+      imagePullSecrets:
+        - name: campus-registry-secret
+      volumes:
+        - name: nginx-react-app-config
+          configMap:
+            name: nginx-react-app-config
+        - name: jsconfig-react-app
+          configMap:
+            name: jsconfig-react-app
