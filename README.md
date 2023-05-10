@@ -1,4 +1,4 @@
-# sample gitops
+# Sample Gitops Project
 
 This is a sample gitops repository for a project. It contains the following:
 

@@ -6,7 +6,7 @@ resources:
   - ingress.yaml
 
 images:
-  - name: rg.fr-par.scw.cloud/campus/reatc
+  - name: rg.fr-par.scw.cloud/campus/react-app:1.0.0
     newTag: 0.1.0-99
 
 configMapGenerator:

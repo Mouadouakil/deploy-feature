@@ -9,4 +9,4 @@ resources:
 commonLabels:
   app.kubernetes.io/name: sb-api
   app.kubernetes.io/component: api
-  app.kubernetes.io/part-of: mfa
+  app.kubernetes.io/part-of: api
