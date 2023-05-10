@@ -1,3 +1,9 @@
+## Tenant provisionning 
+Ask your admin here https://discord.com/channels/948214033746624584/965961854977474591 to provision your tenant
+The informations needed are : 
+* Team name 
+* Emails of members (Gmail based emails) 
+
 ## Changing flux configuration
 
 FluxCD will automatically sync the cluster with the git repository. 
@@ -6,7 +12,7 @@ In order to declare you project to Flux, change to following :
 
 ```
 my-namespace -> your project namespace
-my-team -> your team name (ask your admin to create your team name)
+my-team -> your team name
 path -> the path to your project in the git repository
 name -> the name of your project
 ```
