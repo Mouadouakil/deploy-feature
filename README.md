@@ -15,30 +15,6 @@ You should change namespace name in `kustomization.yaml` file.
 
 # Project structure
 
-```
-+-- infrastructure        // this folder contains all the infrastructure components
-|   +-- flux
-|   +-- database 
-|   |   +-- base
-|   |   +-- overlays
-|   |   |   +-- dev
-|   |   |   +-- ..
-|   |   |   +-- prod
-+-- workloads             // Contains all the workloads
-|   +-- fronts            // Frontend workloads for example react-app, you can have as many directories as the number of front apps.
-|   |   +-- react-app     // react-app deployment artifacts
-|   |   |   +-- base      // Base artifacts for react-app
-|   |   |   +-- overlays  // Overlays for react-app, overlay override the base artifacts according to the environment
-|   |   |   |   +-- dev   // dev environment artifacts
-|   |   |   |   +-- ..
-|   +-- backend // this folder contains all the backend workloads
-|   |   +-- sb-api
-|   |   |   +-- base
-|   |   |   +-- overlays
-|   |   |   |   +-- dev
-|   |   |   |   +-- ..
-
-```
 
 # sample gitops Tests
 
